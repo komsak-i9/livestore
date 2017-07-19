@@ -18,13 +18,7 @@ public class LiveStore {
      * @param args the command line arguments
      */
     public static void main(String[] args) throws IOException {
-        // TODO code application logic here
-        StoreLoader storeLoader = new StoreLoader(
-                "mydb1", "root", "password");
-        List<ItemDTO> items = storeLoader.getItems();
-
-        ItemDTO dto = storeLoader.getItem(1);
-        System.out.print ("getItem:" + dto.getType());
+        
     }
 //
 //    public static void createItemService(List<ItemDTO> items) throws IOException {
