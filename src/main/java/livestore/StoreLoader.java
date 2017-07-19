@@ -22,10 +22,47 @@ public class StoreLoader {
         this.password = password;
     }
 
+    public ItemDTO getItem(int id)  {
+        String mysqlJdbcUrl = "jdbc:mysql://localhost/"
+                + dbName
+                + "?user=" + username
+                + "&password=" + password;
+
+        Connection conn = null;
+     
+        try {
+            conn = DriverManager.getConnection(mysqlJdbcUrl);
+
+            PreparedStatement pstmt = conn.prepareStatement("select "
+                    + "id, type, size, color, price, cost from item where id = " + id );
+            ResultSet rs = pstmt.executeQuery();
+
+            while(rs.next()){
+                ItemDTO dto = new ItemDTO();
+                dto.setId(rs.getInt("id"));
+                dto.setType(rs.getString("type"));
+                dto.setColor(rs.getString("color").charAt(0));
+                dto.setSize(rs.getString("size").charAt(0));
+                dto.setPrice(rs.getDouble("price"));
+                dto.setCost(rs.getDouble("cost"));
+                return  dto;
+            }
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        } finally {
+            try {
+                conn.close();
+            } catch (SQLException e) {
+            }
+        }
+        return null;
+    }
+    
     //Todo connect database
     //select all item
     //fill all data from table to dto
-    public List<ItemDTO> LoadItems() {
+    public List<ItemDTO> getItems() {
 
         String mysqlJdbcUrl = "jdbc:mysql://localhost/"
                 + dbName

@@ -5,6 +5,7 @@ import lombok.Data;
 
 @Data
 public class ItemDTO implements Serializable{
+    private int id;
     private String type;
     private char size;
     private char color;
