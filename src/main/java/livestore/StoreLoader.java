@@ -5,6 +5,7 @@ import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.List;
 
 public class StoreLoader {
@@ -21,32 +22,34 @@ public class StoreLoader {
         this.password = password;
     }
 
+    //Todo connect database
+    //select all item
+    //fill all data from table to dto
     public List<ItemDTO> LoadItems() {
 
-        String mysqlJdbcUrl = "jdbc:mysql://localhost/" 
+        String mysqlJdbcUrl = "jdbc:mysql://localhost/"
                 + dbName
-                + "?user=" + username 
+                + "?user=" + username
                 + "&password=" + password;
 
         Connection conn = null;
+        ArrayList<ItemDTO> items = new ArrayList<>();
 
         try {
             conn = DriverManager.getConnection(mysqlJdbcUrl);
-            
+
             PreparedStatement pstmt = conn.prepareStatement("select "
                     + "type, size, color, price, cost from item");
             ResultSet rs = pstmt.executeQuery();
-            
-            if (rs.next()) {
-                System.out.println(rs.getString("type"));
-                System.out.println(rs.getString("size"));
-                System.out.println(rs.getString("color"));
-                System.out.println(rs.getDouble("price"));
-                System.out.println(rs.getDouble("cost"));
-                
+
+            while(rs.next()){
                 ItemDTO dto = new ItemDTO();
                 dto.setType(rs.getString("type"));
-                //..
+                dto.setColor(rs.getString("color").charAt(0));
+                dto.setSize(rs.getString("size").charAt(0));
+                dto.setPrice(rs.getDouble("price"));
+                dto.setCost(rs.getDouble("cost"));
+                items.add(dto);
             }
 
         } catch (SQLException e) {
@@ -57,10 +60,6 @@ public class StoreLoader {
             } catch (SQLException e) {
             }
         }
-
-        //Todo connect database
-        //select all item
-        //fill all data from table to dto
-        return null;
+        return items;
     }
 }

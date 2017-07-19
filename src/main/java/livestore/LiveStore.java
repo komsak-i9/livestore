@@ -1,7 +1,6 @@
 
 package livestore;
 
-import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -17,7 +16,13 @@ public class LiveStore {
         // TODO code application logic here
         StoreLoader storeLoader = new StoreLoader(
                 "mydb1","root","password");
-        List<ItemDTO> items = storeLoader.LoadItems();        
+        List<ItemDTO> items = storeLoader.LoadItems();  
+        
+        for( ItemDTO item : items) {
+            System.out.println( item.getType() 
+                    + ", sellprice = " 
+                    + item.getCost() * item.getPrice());
+        }
     }
     
 }
