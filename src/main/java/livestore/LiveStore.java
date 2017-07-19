@@ -34,12 +34,21 @@ public class LiveStore {
 
         while (true) {
             Socket conSocket = welcomeSocket.accept();
-            BufferedReader fromClient = new BufferedReader (
-                new InputStreamReader(conSocket.getInputStream()));
+            BufferedReader fromClient = new BufferedReader(
+                    new InputStreamReader(conSocket.getInputStream()));
+
             DataOutputStream toClient = new DataOutputStream(conSocket.getOutputStream());
             clientSentence = fromClient.readLine();
-            String s = "Hello,"+ clientSentence+ '\n';
-            toClient.writeBytes(s);  
+
+            String s = "Hello," + clientSentence + "," 
+                    + "what would you like to buy?\n";
+           
+            for (ItemDTO item : items) {
+                s = s + (item.getType() + ", sellPrice=" +
+                        item.getPrice() * item.getCost() + '\n');
+            }
+            toClient.writeBytes(s);
+            toClient.flush();
         }
     }
 }
