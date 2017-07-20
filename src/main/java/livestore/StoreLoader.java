@@ -40,9 +40,7 @@ public class StoreLoader {
             while(rs.next()){
                 ItemDTO dto = new ItemDTO();
                 dto.setId(rs.getInt("id"));
-                dto.setType(rs.getString("type"));
-                dto.setColor(rs.getString("color").charAt(0));
-                dto.setSize(rs.getString("size").charAt(0));
+                dto.setType(rs.getString("type")); 
                 dto.setPrice(rs.getDouble("price"));
                 dto.setCost(rs.getDouble("cost"));
                 return  dto;
